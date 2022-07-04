@@ -1,7 +1,9 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录" />
+    <van-nav-bar class="page-nav-bar" title="登录">
+      <van-icon slot="left" name="cross" @click="$router.back()"></van-icon>
+    </van-nav-bar>
 
     <!-- 登录表单 -->
     <!-- 1.给van-field组件配置rules验证规则 2.当表单提交的时候，会自动触发表单验证；如果验证通过则触发submit事件，失败则不会触发 -->
@@ -99,6 +101,7 @@ export default {
       this.$toast.loading({
         message: "登录中...",
         forbidClick: true, // 禁用背景点击
+        duration: 0, // 持续时间，默认2000， 0表示持续展示不关闭
       });
 
       // 3.提交表单请求登录
@@ -106,6 +109,9 @@ export default {
         const { data } = await login(user);
         this.$store.commit("setUser", data.data);
         this.$toast.success("登录成功");
+
+        // 登录成功， 跳转会原来页面(back方式不严谨)
+        this.$router.back();
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail("手机号或验证码错误");
