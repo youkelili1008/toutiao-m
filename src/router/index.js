@@ -13,6 +13,7 @@ const routes = [
   {
     path: '/',
     // name: 'layout',
+    redirect: '/home',
     component: () => import('@/views/layout'),
     children: [
       {
@@ -36,6 +37,17 @@ const routes = [
         component: () => import('@/views/my')
       }
     ]
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/search')
+  },
+  {
+    path: '/article/:articleId',
+    name: 'article',
+    component: () => import('@/views/article'),
+    props: true   // 开启Props传参，就是把路由参数映射到组件的props中
   },
 ]
 
